@@ -127,4 +127,12 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
     ],
+    entry_points={
+        "lms.djangoapp": [
+            'openedx_demo_plugin = openedx_demo_plugin.apps:OpenedxDemoPluginConfig',
+        ],
+        "cms.djangoapp": [
+            'openedx_demo_plugin = openedx_demo_plugin.apps:OpenedxDemoPluginConfig',
+        ],
+    },
 )
