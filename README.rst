@@ -1,27 +1,20 @@
-openedx-demo-plugin
-=============================
+Open edX Demo plugin
+=====================
 
-|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
-|license-badge|
+|pypi-badge| |ci-badge| |codecov-badge| |pyversions-badge| |license-badge|
 
-The ``README.rst`` file should start with a brief description of the repository,
-which sets it in the context of other repositories under the ``edx``
-organization. It should make clear where this fits in to the overall edX
-codebase.
+
+Overview
+--------
 
 Where all the extensions & tools for the Open edX Demo Site installation live!
 
-Overview (please modify)
-------------------------
+Here's the list of solutions implemented in this repository:
 
-The ``README.rst`` file should then provide an overview of the code in this
-repository, including the main components and useful entry points for starting
-to understand the code in more detail.
+- Assign course access roles to users after their registration process
+- Common configurations
+- Commands for resetting databases to initial state [WIP]
 
-Documentation
--------------
-
-(TODO: `Set up documentation <https://openedx.atlassian.net/wiki/spaces/DOC/pages/21627535/Publish+Documentation+on+Read+the+Docs>`_)
 
 Development Workflow
 --------------------
