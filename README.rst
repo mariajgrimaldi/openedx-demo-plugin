@@ -1,7 +1,7 @@
 Open edX Demo plugin
 =====================
 
-|pypi-badge| |ci-badge| |codecov-badge| |pyversions-badge| |license-badge|
+|ci-badge| |license-badge|
 
 
 Overview
