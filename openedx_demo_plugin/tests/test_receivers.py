@@ -3,14 +3,12 @@
 Classes:
     RegistrationCompletedReceiverTest: test registration event receiver.
 """
-import datetime
 from unittest.mock import patch
 
 from django.test import TestCase, override_settings
-from opaque_keys.edx.keys import CourseKey
 from openedx_events.data import EventsMetadata
-from openedx_events.learning.data import CourseData, CourseEnrollmentData, UserData, UserPersonalData
-from openedx_events.learning.signals import COURSE_ENROLLMENT_CREATED, STUDENT_REGISTRATION_COMPLETED
+from openedx_events.learning.data import UserData, UserPersonalData
+from openedx_events.learning.signals import STUDENT_REGISTRATION_COMPLETED
 from django.contrib.auth.models import User
 
 from openedx_demo_plugin.receivers import assign_org_course_access_to_user
