@@ -5,7 +5,7 @@ For a detailed description on events receivers definitions please refer to the
 hooks official documentation.
 """
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from openedx_events.learning.data import UserData
 
 try:
@@ -13,6 +13,7 @@ try:
 except ImportError:
     get_access_role_by_role_name = object
 
+User = get_user_model()
 
 def assign_org_course_access_to_user(user: UserData, **kwargs):
     """

@@ -9,10 +9,11 @@ from django.test import TestCase, override_settings
 from openedx_events.data import EventsMetadata
 from openedx_events.learning.data import UserData, UserPersonalData
 from openedx_events.learning.signals import STUDENT_REGISTRATION_COMPLETED
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from openedx_demo_plugin.receivers import assign_org_course_access_to_user
 
+User = get_user_model()
 
 class RegistrationCompletedReceiverTest(TestCase):
     """
