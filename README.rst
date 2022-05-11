@@ -15,6 +15,20 @@ Here's the list of solutions implemented in this repository:
 - Common configurations
 - Commands for resetting databases to initial state [WIP]
 
+Usage
+-----
+
+First, install the plugin:
+
+.. code-block:: bash
+
+  git clone https://github.com/eduNEXT/openedx-demo-plugin/
+  pip install ./openedx-demo-plugin
+
+Then:
+
+- After the registration your user will have course access permissions
+- ... [WIP]
 
 Development Workflow
 --------------------
