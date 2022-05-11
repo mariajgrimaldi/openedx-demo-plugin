@@ -1,6 +1,11 @@
 """
 Common test settings for the Open edX Demo site.
 """
+from .common import *
+
+
+class SettingsClass:
+    """ dummy settings class """
 
 
 def plugin_settings(settings):
@@ -10,3 +15,30 @@ def plugin_settings(settings):
     """
     settings.OPEN_EDX_VISITOR_ORG = "Public"
 
+
+SETTINGS = SettingsClass()
+plugin_settings(SETTINGS)
+vars().update(SETTINGS.__dict__)
+
+
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'openedx_demo_plugin',
+)
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'default.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
+
+
+SECRET_KEY = 'insecure-secret-key'

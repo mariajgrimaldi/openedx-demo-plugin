@@ -3,7 +3,6 @@ branch = True
 data_file = .coverage
 source=openedx_demo_plugin
 omit =
-    test_settings
     *migrations*
     *admin.py
     *static*

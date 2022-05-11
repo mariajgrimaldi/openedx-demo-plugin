@@ -5,15 +5,16 @@ Classes:
 """
 from unittest.mock import patch
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from openedx_events.data import EventsMetadata
 from openedx_events.learning.data import UserData, UserPersonalData
 from openedx_events.learning.signals import STUDENT_REGISTRATION_COMPLETED
-from django.contrib.auth import get_user_model
 
 from openedx_demo_plugin.receivers import assign_org_course_access_to_user
 
 User = get_user_model()
+
 
 class RegistrationCompletedReceiverTest(TestCase):
     """
@@ -40,7 +41,6 @@ class RegistrationCompletedReceiverTest(TestCase):
         )
         self.registered_user = User.objects.create(username=self.user.pii.username)
 
-    @override_settings(OPEN_EDX_VISITOR_ORG="demo")
     @patch("openedx_demo_plugin.receivers.get_access_role_by_role_name")
     def test_receiver_called_after_event(self, get_access_role_by_role_name):
         """
@@ -54,7 +54,7 @@ class RegistrationCompletedReceiverTest(TestCase):
             user=self.user,
         )
 
-        org_content_creator_role(org="demo").add_users.assert_called_with(self.registered_user)
+        org_content_creator_role(org="Public").add_users.assert_called_with(self.registered_user)
 
     @override_settings(OPEN_EDX_VISITOR_ORG=None)
     @patch("openedx_demo_plugin.receivers.get_access_role_by_role_name")
