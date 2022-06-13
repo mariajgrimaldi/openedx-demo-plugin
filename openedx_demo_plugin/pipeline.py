@@ -10,8 +10,9 @@ from openedx_filters import PipelineStep
 
 class FilterCoursesByOrganization(PipelineStep):
     """
-    Filter courses rendered in the current template context based on the OPEN_EDX_VISITOR_ORG
-    setting.
+    Filter courses rendered in the current template context.
+
+    Example usage:
 
     "OPEN_EDX_FILTERS_CONFIG": {
         "org.openedx.learning.homepage.render.started.v1": {
@@ -29,7 +30,10 @@ class FilterCoursesByOrganization(PipelineStep):
     },
     """
 
-    def run_filter(self, context, template_name, *args, **kwargs):  # pylint: disable=arguments-differ
+    def run_filter(self, context, template_name, *args, **kwargs):  # pylint: disable=arguments-differ, unused-argument
+        """
+        Filter courses in template context based on OPEN_EDX_VISITOR_ORG.
+        """
         visitor_org = getattr(settings, "OPEN_EDX_VISITOR_ORG", None)
         if not visitor_org:
             return {}
