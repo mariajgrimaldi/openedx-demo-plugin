@@ -3,3 +3,4 @@
 
 Django             # Web application framework
 openedx-events     # For Open edX Events framework tools
+openedx-filters    # For Open edX Filters framework tools
