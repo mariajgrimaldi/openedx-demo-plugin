@@ -11,23 +11,6 @@ from openedx_filters import PipelineStep
 class FilterCoursesByOrganization(PipelineStep):
     """
     Filter courses rendered in the current template context.
-
-    Example usage:
-
-    "OPEN_EDX_FILTERS_CONFIG": {
-        "org.openedx.learning.homepage.render.started.v1": {
-            "fail_silently": false,
-            "pipeline": [
-                "openedx_demo_plugin.pipeline.FilterCoursesByOrganization"
-            ]
-        },
-        "org.openedx.learning.catalog.render.started.v1": {
-            "fail_silently": false,
-            "pipeline": [
-                "openedx_demo_plugin.pipeline.FilterCoursesByOrganization"
-            ]
-        }
-    },
     """
 
     def run_filter(self, context, template_name, *args, **kwargs):  # pylint: disable=arguments-differ, unused-argument

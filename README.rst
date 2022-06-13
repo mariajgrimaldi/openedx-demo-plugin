@@ -25,17 +25,39 @@ First, install the plugin:
   git clone https://github.com/eduNEXT/openedx-demo-plugin/
   pip install ./openedx-demo-plugin
 
-Then:
+Then, these configurations will be added by the plugin:
 
-- After the registration your user will have course access permissions
-- ... [WIP]
+.. code-block:: python
+
+  OPEN_EDX_FILTERS_CONFIG = {
+      "org.openedx.learning.homepage.render.started.v1": {
+          "fail_silently": False,
+          "pipeline": [
+              "openedx_demo_plugin.pipeline.FilterCoursesByOrganization"
+          ]
+      },
+      "org.openedx.learning.catalog.render.started.v1": {
+          "fail_silently": False,
+          "pipeline": [
+              "openedx_demo_plugin.pipeline.FilterCoursesByOrganization"
+          ]
+      }
+  },
+  OPEN_EDX_VISITOR_ORG = "Public"
+  FEATURES["ENABLE_CREATOR_GROUP"] = True
+
+With this, you'll be able to:
+
+- After the registration your user will have course creator permissions
+- Courses with ``Public`` organization won't be shown in the catalog/homepage
+
 
 Development Workflow
 --------------------
 
 One Time Setup
 ~~~~~~~~~~~~~~
-.. code-block::
+.. code-block:: bash
 
   # Clone the repository
   git clone git@github.com:edx/openedx-demo-plugin.git
