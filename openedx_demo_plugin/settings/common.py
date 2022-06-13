@@ -9,4 +9,18 @@ def plugin_settings(settings):
     See: https://github.com/openedx/edx-django-utils/tree/master/edx_django_utils/plugins
     """
     settings.OPEN_EDX_VISITOR_ORG = "Public"
-    settings.FEATURES['ENABLE_CREATOR_GROUP'] = True
+    settings.FEATURES["ENABLE_CREATOR_GROUP"] = True
+    settings.OPEN_EDX_FILTERS_CONFIG = {
+        "org.openedx.learning.homepage.render.started.v1": {
+            "fail_silently": False,
+            "pipeline": [
+                "openedx_demo_plugin.pipeline.FilterCoursesByOrganization"
+            ]
+        },
+        "org.openedx.learning.catalog.render.started.v1": {
+            "fail_silently": False,
+            "pipeline": [
+                "openedx_demo_plugin.pipeline.FilterCoursesByOrganization"
+            ]
+        }
+    }
