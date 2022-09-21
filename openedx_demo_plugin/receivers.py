@@ -31,7 +31,9 @@ def assign_org_course_access_to_user(user: UserData, **kwargs):
     """
     visitor_org_short_name = getattr(settings, "OPEN_EDX_VISITOR_ORG", None)
     if not visitor_org_short_name:
+        log.info("No OPEN_EDX_VISITOR_ORG provided, terminating course creation assignment.")
         return
+
     visitor_org = get_organization_by_short_name(visitor_org_short_name)
 
     registered_user = User.objects.get(username=user.pii.username)
@@ -40,6 +42,11 @@ def assign_org_course_access_to_user(user: UserData, **kwargs):
         state=CourseCreator.GRANTED,
         all_organizations=False,
     )
+
+    course_creator_admin_id = getattr(settings, "COURSE_CREATOR_ADMIN_ID", None)
+    if not course_creator_admin_id:
+        log.info("No COURSE_CREATOR_ADMIN_ID provided, terminating course creation assignment.")
+        return
 
     # In order to add course creator permissions programmatically, we must attach
     # to the user just registered. So the post_add signals receivers like
