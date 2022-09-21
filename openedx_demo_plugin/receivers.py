@@ -4,6 +4,8 @@ File where Open edX Events receivers are defined.
 For a detailed description on events receivers definitions please refer to the
 hooks official documentation.
 """
+import logging
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from openedx_events.learning.data import UserData
@@ -16,6 +18,7 @@ except ImportError:
     CourseCreator = object
 
 User = get_user_model()
+log = logging.getLogger(__name__)
 
 
 def assign_org_course_access_to_user(user: UserData, **kwargs):
@@ -41,6 +44,10 @@ def assign_org_course_access_to_user(user: UserData, **kwargs):
     # In order to add course creator permissions programmatically, we must attach
     # to the user just registered. So the post_add signals receivers like
     # `course_creator_organizations_changed_callback` can run checks over instance.admin.
-    course_creator.admin = User.objects.get(username=settings.COURSE_CREATOR_ADMIN_ID)
+    try:
+        course_creator.admin = User.objects.get(username=settings.COURSE_CREATOR_ADMIN_ID)
+    except User.DoestNotExist:
+        log.exception("User with username specified in COURSE_CREATOR_ADMIN_ID does not exist.")
+        return
     course_creator.save()
     course_creator.organizations.add(visitor_org.get("id"))
