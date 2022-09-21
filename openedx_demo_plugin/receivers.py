@@ -9,9 +9,11 @@ from django.contrib.auth import get_user_model
 from openedx_events.learning.data import UserData
 
 try:
-    from common.djangoapps.student.api import get_access_role_by_role_name
+    from cms.djangoapps.course_creators.models import CourseCreator
+    from organizations.api import get_organization_by_short_name
 except ImportError:
-    get_access_role_by_role_name = object
+    get_organization_by_short_name = object
+    CourseCreator = object
 
 User = get_user_model()
 
@@ -24,10 +26,21 @@ def assign_org_course_access_to_user(user: UserData, **kwargs):
     OPEN_EDX_VISITOR_ORG setting if exists. If doesn't exist, then acts
     like a noop.
     """
-    visitor_org = getattr(settings, "OPEN_EDX_VISITOR_ORG", None)
-    if not visitor_org:
+    visitor_org_short_name = getattr(settings, "OPEN_EDX_VISITOR_ORG", None)
+    if not visitor_org_short_name:
         return
+    visitor_org = get_organization_by_short_name(visitor_org_short_name)
 
     registered_user = User.objects.get(username=user.pii.username)
-    org_content_creator_role = get_access_role_by_role_name("org_course_creator_group")
-    org_content_creator_role(org=visitor_org).add_users(registered_user)
+    course_creator = CourseCreator(
+        user=registered_user,
+        state=CourseCreator.GRANTED,
+        all_organizations=False,
+    )
+
+    # In order to add course creator permissions programmatically, we must attach
+    # to the user just registered. So the post_add signals receivers like
+    # `course_creator_organizations_changed_callback` can run checks over instance.admin.
+    course_creator.admin = User.objects.get(username=settings.COURSE_CREATOR_ADMIN_ID)
+    course_creator.save()
+    course_creator.organizations.add(visitor_org.get("id"))

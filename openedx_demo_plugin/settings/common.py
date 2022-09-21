@@ -24,3 +24,5 @@ def plugin_settings(settings):
             ]
         }
     }
+    if "cms.djangoapps.course_creators" not in settings.INSTALLED_APPS:
+        settings.INSTALLED_APPS = settings.INSTALLED_APPS + ["cms.djangoapps.course_creators"]
