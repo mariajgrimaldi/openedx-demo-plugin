@@ -69,7 +69,7 @@ class RegistrationCompletedReceiverTest(TestCase):
             state=course_creator.GRANTED,
             all_organizations=False,
         )
-        course_creator.organizations.add.assert_called_with(organization_id)
+        course_creator.return_value.organizations.add.assert_called_with(organization_id)
 
     @override_settings(COURSE_CREATOR_ADMIN_ID="non-existent-user")
     @patch("openedx_demo_plugin.receivers.CourseCreator")
@@ -91,7 +91,7 @@ class RegistrationCompletedReceiverTest(TestCase):
             state=course_creator.GRANTED,
             all_organizations=False,
         )
-        course_creator.organizations.add.assert_not_called()
+        course_creator.return_value.organizations.add.assert_not_called()
 
     @override_settings(COURSE_CREATOR_ADMIN_ID=None)
     @patch("openedx_demo_plugin.receivers.CourseCreator")
@@ -113,7 +113,7 @@ class RegistrationCompletedReceiverTest(TestCase):
             state=course_creator.GRANTED,
             all_organizations=False,
         )
-        course_creator.organizations.add.assert_not_called()
+        course_creator.return_value.organizations.add.assert_not_called()
 
     @override_settings(OPEN_EDX_VISITOR_ORG=None)
     @patch("openedx_demo_plugin.receivers.CourseCreator")
@@ -131,4 +131,4 @@ class RegistrationCompletedReceiverTest(TestCase):
 
         get_organization_by_short_name.return_value.assert_not_called()
         course_creator.assert_not_called()
-        course_creator.organizations.add.assert_not_called()
+        course_creator.return_value.organizations.add.assert_not_called()
