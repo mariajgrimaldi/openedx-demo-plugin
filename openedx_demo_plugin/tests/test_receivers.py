@@ -53,8 +53,9 @@ class RegistrationCompletedReceiverTest(TestCase):
         Test that assign_org_course_access_to_user is called the correct information after sending
         STUDENT_REGISTRATION_COMPLETED event.
         """
+        organization_id = 1
         get_organization_by_short_name.return_value = {
-            "id": 1,
+            "id": organization_id,
         }
         STUDENT_REGISTRATION_COMPLETED.connect(assign_org_course_access_to_user)
 
@@ -68,7 +69,7 @@ class RegistrationCompletedReceiverTest(TestCase):
             state=course_creator.GRANTED,
             all_organizations=False,
         )
-        course_creator.organizations.add.assert_called_with(settings.OPEN_EDX_VISITOR_ORG)
+        course_creator.organizations.add.assert_called_with(organization_id)
 
     @override_settings(COURSE_CREATOR_ADMIN_ID="non-existent-user")
     @patch("openedx_demo_plugin.receivers.CourseCreator")
