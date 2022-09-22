@@ -34,7 +34,10 @@ def assign_org_course_access_to_user(user: UserData, **kwargs):
         log.info("No OPEN_EDX_VISITOR_ORG provided, terminating course creation assignment.")
         return
 
-    visitor_org = get_organization_by_short_name(visitor_org_short_name)
+    course_creator_admin_id = getattr(settings, "COURSE_CREATOR_ADMIN_ID", None)
+    if not course_creator_admin_id:
+        log.info("No COURSE_CREATOR_ADMIN_ID provided, terminating course creation assignment.")
+        return
 
     registered_user = User.objects.get(username=user.pii.username)
     course_creator = CourseCreator(
@@ -43,14 +46,10 @@ def assign_org_course_access_to_user(user: UserData, **kwargs):
         all_organizations=False,
     )
 
-    course_creator_admin_id = getattr(settings, "COURSE_CREATOR_ADMIN_ID", None)
-    if not course_creator_admin_id:
-        log.info("No COURSE_CREATOR_ADMIN_ID provided, terminating course creation assignment.")
-        return
-
     # In order to add course creator permissions programmatically, we must attach
     # to the user just registered. So the post_add signals receivers like
     # `course_creator_organizations_changed_callback` can run checks over instance.admin.
+    visitor_org = get_organization_by_short_name(visitor_org_short_name)
     try:
         course_creator.admin = User.objects.get(username=course_creator_admin_id)
     except User.DoestNotExist:

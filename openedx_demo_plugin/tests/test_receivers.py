@@ -107,12 +107,8 @@ class RegistrationCompletedReceiverTest(TestCase):
             user=self.user,
         )
 
-        get_organization_by_short_name.assert_called_with(settings.OPEN_EDX_VISITOR_ORG)
-        course_creator.assert_called_with(
-            user=self.registered_user,
-            state=course_creator.GRANTED,
-            all_organizations=False,
-        )
+        get_organization_by_short_name.assert_not_called()
+        course_creator.assert_not_called()
         course_creator.return_value.organizations.add.assert_not_called()
 
     @override_settings(OPEN_EDX_VISITOR_ORG=None)
