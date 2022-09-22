@@ -52,7 +52,7 @@ def assign_org_course_access_to_user(user: UserData, **kwargs):
     # to the user just registered. So the post_add signals receivers like
     # `course_creator_organizations_changed_callback` can run checks over instance.admin.
     try:
-        course_creator.admin = User.objects.get(username=settings.COURSE_CREATOR_ADMIN_ID)
+        course_creator.admin = User.objects.get(username=course_creator_admin_id)
     except User.DoestNotExist:
         log.exception("User with username specified in COURSE_CREATOR_ADMIN_ID does not exist.")
         return
