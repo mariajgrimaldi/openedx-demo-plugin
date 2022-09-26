@@ -105,6 +105,7 @@ setup(
     version=VERSION,
     description="""Where all the extensions & tools for the Open edX Demo Site installation live!""",
     long_description=README + '\n\n' + CHANGELOG,
+    long_description_content_type='text/x-rst',
     author='edX',
     author_email='oscm@edx.org',
     url='https://github.com/edx/openedx-demo-plugin',
