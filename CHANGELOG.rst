@@ -14,7 +14,14 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
-*
+[0.2.0] - 2022-09-26
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Added
+_____
+
+* Add receiver for registration event.
+* Add pipelines for catalog/homepage render.
 
 [0.1.0] - 2022-03-25
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
