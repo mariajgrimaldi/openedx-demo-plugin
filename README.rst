@@ -45,6 +45,7 @@ Then, these configurations will be added by the plugin:
   },
   OPEN_EDX_VISITOR_ORG = "Public"
   FEATURES["ENABLE_CREATOR_GROUP"] = True
+  COURSE_CREATOR_ADMIN_ID = "random-user-with-staff-permissions"
 
 With this, you'll be able to:
 
