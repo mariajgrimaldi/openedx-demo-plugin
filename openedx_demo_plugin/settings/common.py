@@ -10,6 +10,7 @@ def plugin_settings(settings):
     """
     settings.OPEN_EDX_VISITOR_ORG = "Public"
     settings.FEATURES["ENABLE_CREATOR_GROUP"] = True
+    settings.OPEN_EDX_STUDENT_BACKEND = 'openedx_demo_plugin.edxapp_wrapper.backends.student_l_v1'
     settings.OPEN_EDX_FILTERS_CONFIG = {
         "org.openedx.learning.homepage.render.started.v1": {
             "fail_silently": False,
@@ -24,5 +25,6 @@ def plugin_settings(settings):
             ]
         }
     }
+
     if "cms.djangoapps.course_creators" not in settings.INSTALLED_APPS:
         settings.INSTALLED_APPS = settings.INSTALLED_APPS + ["cms.djangoapps.course_creators"]
