@@ -9,9 +9,11 @@ classes:
 
 import csv
 from django.contrib import admin
-from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+from openedx_demo_plugin.admin.register_admin_model import register_admin_model as register
 from openedx_demo_plugin.edxapp_wrapper.student_module import UserAdmin
+
 
 User = get_user_model()
 
