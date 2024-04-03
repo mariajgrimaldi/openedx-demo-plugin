@@ -52,7 +52,7 @@ class EmailInfoFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         """Return queryset based on the class value."""
         if self.value() == 'yes':
-            return queryset.filter(profile__meta__iexact='{"mktg": true}')
+            return queryset.filter(profile__meta__icontains='"mktg": true')
         elif self.value() == 'no':
             return queryset.filter(profile__meta__iexact='')
 
