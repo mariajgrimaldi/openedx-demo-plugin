@@ -4,7 +4,6 @@ methods:
     register_admin_model: Force register admin model.
 """
 from django.contrib import admin
-import logging
 
 def register_admin_model(model, admin_model):
     """Associate a model with the given admin model.
