@@ -10,6 +10,8 @@ classes:
 import csv
 import json
 
+import logging as log
+
 from django.http import HttpResponse
 from django.contrib import admin
 from django.contrib.auth import get_user_model
@@ -22,17 +24,21 @@ class ExportCsvMixin:
     """Mixin for exporting queryset as CSV."""
     def export_as_csv(self, request, queryset, fields=None):
         """Exports selected data to CSV."""
-        meta = self.model._meta
+        query = queryset.select_related('profile').all()
 
-        field_names = fields if fields else [field.name for field in meta.fields]
+        user_fields = ['username', 'first_name', 'last_name']
+        profile_fields = ['country', 'phone_number']
+
+        field_names = fields if fields else user_fields + profile_fields
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=users_data.csv'
         writer = csv.writer(response)
 
         writer.writerow(field_names)
-        for obj in queryset:
-            writer.writerow([getattr(obj, field) for field in field_names])
+        for obj in query:
+            row = [getattr(obj.profile, field, '') if field in profile_fields and obj.profile else getattr(obj, field, '') for field in field_names]
+            writer.writerow(row)
 
         return response
 
@@ -86,13 +92,6 @@ class DemoUserAdmin(UserAdmin, ExportCsvMixin):
     list_filter = UserAdmin.list_filter + (EmailInfoFilter,)
     search_fields = UserAdmin.search_fields
     fieldsets = UserAdmin.fieldsets
-    actions = ["export_selected_as_csv"]
-
-    def export_selected_as_csv(self, request, queryset):
-        """Export selected users as CSV."""
-        return self.export_as_csv(request, queryset, fields=None)
-
-    export_selected_as_csv.short_description = "Export Selected"
-
+    actions = ["export_as_csv"]
 
 register(User, DemoUserAdmin)
