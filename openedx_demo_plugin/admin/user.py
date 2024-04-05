@@ -10,8 +10,6 @@ classes:
 import csv
 import json
 
-import logging as log
-
 from django.http import HttpResponse
 from django.contrib import admin
 from django.contrib.auth import get_user_model
