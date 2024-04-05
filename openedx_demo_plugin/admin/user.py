@@ -57,8 +57,8 @@ class EmailInfoFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         """Return queryset based on the class value."""
-        meta_queryset = queryset.exclude(profile__meta='').values('profile__meta')
-        empty_queryset = queryset.filter(profile__meta__iexact='')
+        meta_queryset = queryset.exclude(profile__isnull=True).exclude(profile__meta='').values('profile__meta')
+        empty_queryset = queryset.exclude(profile__isnull=True).filter(profile__meta__iexact='')
         meta_true = []
         meta_false = []
 
