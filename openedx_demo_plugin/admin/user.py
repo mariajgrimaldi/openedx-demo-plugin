@@ -24,7 +24,7 @@ class ExportCsvMixin:
         """Exports selected data to CSV."""
         query = queryset.select_related('profile').all()
 
-        user_fields = ['username', 'first_name', 'last_name']
+        user_fields = ['username', 'first_name', 'last_name', 'email']
         profile_fields = ['country', 'phone_number']
 
         field_names = fields if fields else user_fields + profile_fields
@@ -65,10 +65,10 @@ class EmailInfoFilter(admin.SimpleListFilter):
         for elem in meta_queryset:
             try:
                 meta_data = json.loads(elem['profile__meta'])
-                mktg_value = meta_data.get('mktg')
 
+                mktg_value = meta_data.get('mktg')
                 if mktg_value is not None:
-                    if mktg_value:
+                    if mktg_value == 'true':
                         meta_true.append(elem['profile__meta'])
                     else:
                         meta_false.append(elem['profile__meta'])
