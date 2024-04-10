@@ -24,8 +24,8 @@ class ExportCsvMixin:
         """Exports selected data to CSV."""
         query = queryset.select_related('profile').all()
 
-        user_fields = ['username', 'first_name', 'last_name', 'email']
-        profile_fields = ['country', 'phone_number']
+        user_fields = ['username', 'name', 'first_name', 'last_name', 'email']
+        profile_fields = ['country', 'phone_number', 'meta']
 
         field_names = fields if fields else user_fields + profile_fields
 
